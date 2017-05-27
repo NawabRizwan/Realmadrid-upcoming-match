@@ -3,18 +3,19 @@ import datetime
 from bs4 import BeautifulSoup as bs
 from lxml import html
 
+#link to obtain information about realMadrid's next match
 url = 'http://www.realmadrid.com/en/football/schedule'
 response = requests.get(url)
 html = response.content
 soup = bs(html,"lxml")
 
 #getting contents from Real madrid website
-opp1 = soup.find('div', {'class': 'm_highlighted_next_game_team'}).strong.contents
-opp2 = soup.find('div', {'class': 'm_highlighted_next_game_team m_highlighted_next_game_second_team'}).strong.contents
-time = soup.find('div', {'class': 'm_highlighted_next_game_info_wrapper'}).time.contents
-date = soup.find('header', {'class': 'm_highlighted_next_game_header'}).time.contents
-location = soup.find('p', {'class': 'm_highlighted_next_game_location'}).contents
-matchtype = soup.find('header', {'class': 'm_highlighted_next_game_header'}).span.contents
+opp1 = soup.find('div', {'class': 'm_highlighted_next_game_team'}).strong.contents  #home team
+opp2 = soup.find('div', {'class': 'm_highlighted_next_game_team m_highlighted_next_game_second_team'}).strong.contents  #away team
+time = soup.find('div', {'class': 'm_highlighted_next_game_info_wrapper'}).time.contents    #time in cet(gmt+2:00)
+date = soup.find('header', {'class': 'm_highlighted_next_game_header'}).time.contents   #date of match
+location = soup.find('p', {'class': 'm_highlighted_next_game_location'}).contents   #location of the match
+matchtype = soup.find('header', {'class': 'm_highlighted_next_game_header'}).span.contents  #matchtype(includes champions league,La liga,Copa del rey etc)
 
 #Storing the values
 time1 = time[0].strip()
